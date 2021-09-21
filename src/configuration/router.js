@@ -4,9 +4,16 @@ import SoundModel from "../sound/model";
 
 const router = require("express").Router();
 
+router.get("/", async (req, res, next) => {
+  const config = await ConfigModel.find({
+    user: req.user.username,
+  }).select("-__v");
+  return sendResponse(res, true, config);
+});
+
 router.get("/:id", async (req, res, next) => {
   const sound_id = req.params.id;
-  const config = await ConfigModel.find({
+  const config = await ConfigModel.findOne({
     user: req.user.username,
     sound: sound_id,
   }).select("-__v");
