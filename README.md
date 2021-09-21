@@ -1,4 +1,4 @@
-# BSond Back-end
+# BSound Back-end
 
 Back-end for BSOUND - a project for NFQ Hackathon
 

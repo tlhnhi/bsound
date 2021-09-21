@@ -10,8 +10,11 @@ import Authentication from "./api/authentication";
 import UserRouter from "./user/router";
 import UserController from "./user/controller";
 
+import CategoryRouter from "./category/router";
+import SoundRouter from "./sound/router";
+
 if (!process.env.JWT_SECRET) {
-  const err = new Error("No JWT_SECRET in env variable");
+  let err = new Error("No JWT_SECRET in env variable");
   console.error(err);
 }
 
@@ -40,12 +43,14 @@ app.get("/auth-ping", Middlewares.loginRequired, (req, res) =>
   res.json({ success: true })
 );
 app.use("/user", Middlewares.loginRequired, UserRouter);
+app.use("/category", CategoryRouter);
+app.use("/sound", SoundRouter);
 
 app.post("/reset-password", UserController.resetPassword);
 
 app.use((err, req, res, next) => {
   console.log("Error:", err.message);
-  res.status(422).json({
+  return res.status(500).json({
     success: false,
     message: err.message,
   });
