@@ -10,7 +10,7 @@ export default {
       });
 
     // Validate jwt
-    // let try_token = req.header('Authorization').split(' ')[0];
+    // let try_token = req.header("Authorization").split(" ")[0];
     let try_token = req.header("Authorization").replace("Bearer ", "");
     token.verifyToken(try_token, (err, payload) => {
       if (err)

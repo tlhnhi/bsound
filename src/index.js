@@ -12,6 +12,7 @@ import UserController from "./user/controller";
 
 import CategoryRouter from "./category/router";
 import SoundRouter from "./sound/router";
+import ConfigRouter from "./configuration/router";
 
 if (!process.env.JWT_SECRET) {
   let err = new Error("No JWT_SECRET in env variable");
@@ -45,11 +46,12 @@ app.get("/auth-ping", Middlewares.loginRequired, (req, res) =>
 app.use("/user", Middlewares.loginRequired, UserRouter);
 app.use("/category", CategoryRouter);
 app.use("/sound", SoundRouter);
+app.use("/configuration", Middlewares.loginRequired, ConfigRouter);
 
 app.post("/reset-password", UserController.resetPassword);
 
 app.use((err, req, res, next) => {
-  console.log("Error:", err.message);
+  console.log("\nError:", err.message);
   return res.status(500).json({
     success: false,
     message: err.message,
