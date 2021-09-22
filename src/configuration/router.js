@@ -25,7 +25,13 @@ router.get("/:id", async (req, res, next) => {
     sound: sound_id,
   }).select("-__v");
 
-  config.sound = sound;
+  if (config) config.sound = sound;
+  else
+    return handleError(
+      res,
+      false,
+      "Can not find configuration for this sound."
+    );
   return sendResponse(res, true, config);
 });
 
