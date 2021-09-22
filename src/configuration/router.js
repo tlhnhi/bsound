@@ -7,16 +7,25 @@ const router = require("express").Router();
 router.get("/", async (req, res, next) => {
   const config = await ConfigModel.find({
     user: req.user.username,
-  }).select("-__v");
+  })
+    .populate("sound", "-__v")
+    .select("-__v");
   return sendResponse(res, true, config);
 });
 
 router.get("/:id", async (req, res, next) => {
   const sound_id = req.params.id;
+  const sound = await SoundModel.findById(sound_id).select("-__v");
+
+  if (!sound)
+    return handleError(res, false, "Can not find sound by provided id.");
+
   const config = await ConfigModel.findOne({
     user: req.user.username,
     sound: sound_id,
   }).select("-__v");
+
+  config.sound = sound;
   return sendResponse(res, true, config);
 });
 
