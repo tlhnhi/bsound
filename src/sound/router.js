@@ -13,8 +13,13 @@ router.get("/search/", async (req, res) => {
   let query = new Object();
 
   if (req.query.str) {
-    const str = req.query.str.replace("%20", " ");
-    query.$text = { $search: str };
+    let searchStr = req.query.str.replace("%20", " ");
+    searchStr = { $regex: searchStr, $options: "i" };
+    query.$or = [
+      { name: searchStr },
+      { category: searchStr },
+      { tags: searchStr },
+    ];
   }
   if (req.query.tags) {
     const str_tags = req.query.tags.replace("%20", " ");
