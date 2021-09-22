@@ -60,4 +60,22 @@ router.delete("/:id", async (req, res) => {
   return sendResponse(res, true, category);
 });
 
+router.post("/search/", async (req, res) => {
+  let query = new Object();
+
+  if (req.query.str) {
+    const str = req.query.str.replace("%20", " ");
+    query.$text = { $search: str };
+  }
+  if (req.query.tags) {
+    const str_tags = req.query.tags.replace("%20", " ");
+    query.tags = {
+      $all: str_tags.trim().split(" "),
+    };
+  }
+  console.log("query", query);
+  const sounds = await SoundModel.find(query).select("-__v");
+  return sendResponse(res, true, sounds);
+});
+
 module.exports = router;

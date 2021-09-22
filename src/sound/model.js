@@ -25,6 +25,7 @@ const Schema = new mongoose.Schema(
   },
   { collation: { locale: "vi" } }
 );
+Schema.index({ "$**": "text" });
 
 // Export the model
 export default mongoose.model("Sound", Schema);
