@@ -1,7 +1,6 @@
 import { sendResponse, handleError } from "../util/response";
 import SoundModel from "./model";
 import CategoryModel from "../category/model";
-import ConfigModel from "../configuration/model";
 
 const router = require("express").Router();
 
@@ -41,15 +40,24 @@ router.get("/share/:shareStr", async (req, res) => {
 
     [sound, time, loop, bell, water, bird, thunder, wind, waves] =
       shareStr.split("-");
+    const config = {
+      sound,
+      time,
+      loop,
+      bell,
+      water,
+      bird,
+      thunder,
+      wind,
+      waves,
+    };
+    const soundObj = await SoundModel.findById(sound).select("-__v");
+    if (!soundObj) return handleError(res, false, "ShareString invalid.");
+    config.sound = soundObj;
   } catch (error) {
     console.log("Error: ", error.message);
     return handleError(res, false, "ShareString invalid.");
   }
-
-  const config = { sound, time, loop, bell, water, bird, thunder, wind, waves };
-  const soundObj = await SoundModel.findById(sound).select("-__v");
-  if (!soundObj) return handleError(res, false, "ShareString invalid.");
-  config.sound = soundObj;
   return sendResponse(res, true, config);
 });
 
