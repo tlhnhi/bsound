@@ -20,18 +20,15 @@ router.get("/:id", async (req, res, next) => {
   if (!sound)
     return handleError(res, false, "Can not find sound by provided id.");
 
-  const config = await ConfigModel.findOne({
+  let config = await ConfigModel.findOne({
     user: req.user.username,
     sound: sound_id,
   }).select("-__v");
 
-  if (config) config.sound = sound;
-  else
-    return handleError(
-      res,
-      false,
-      "Can not find configuration for this sound."
-    );
+  if (!config) {
+    config = new ConfigModel({ user: req.user.username, sound });
+  }
+  config.sound = sound;
   return sendResponse(res, true, config);
 });
 
