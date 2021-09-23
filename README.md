@@ -28,4 +28,4 @@ Including
 $ npm run dev
 ```
 
-http://localhost:6060 will be available
+http://localhost:8000 will be available
