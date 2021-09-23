@@ -40,7 +40,7 @@ const Schema = new mongoose.Schema(
       min: [1, "Minimum should be 1"],
       max: [20, "Maximum should be 60"],
     },
-    rain: {
+    thunder: {
       type: Number,
       default: 0,
       min: [1, "Minimum should be 1"],
@@ -52,14 +52,14 @@ const Schema = new mongoose.Schema(
       min: [1, "Minimum should be 1"],
       max: [20, "Maximum should be 60"],
     },
-    people: {
+    waves: {
       type: Number,
       default: 0,
       min: [1, "Minimum should be 1"],
       max: [20, "Maximum should be 60"],
     },
   },
-  { collation: { locale: "vi" } }
+  { timestamps: true, collation: { locale: "vi" } }
 );
 
 // Export the model

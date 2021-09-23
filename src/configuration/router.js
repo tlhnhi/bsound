@@ -59,9 +59,9 @@ router.post("/:id", async (req, res, next) => {
   const bell = req.body.bell || undefined;
   const water = req.body.water || undefined;
   const bird = req.body.bird || undefined;
-  const rain = req.body.rain || undefined;
+  const thunder = req.body.thunder || undefined;
   const wind = req.body.wind || undefined;
-  const people = req.body.people || undefined;
+  const waves = req.body.waves || undefined;
 
   let config = await ConfigModel.findOne({
     user: user,
@@ -76,9 +76,9 @@ router.post("/:id", async (req, res, next) => {
       bell,
       water,
       bird,
-      rain,
+      thunder,
       wind,
-      people,
+      waves,
     });
     config = await newConfig.save().catch((err) => {
       error = err;
@@ -89,9 +89,9 @@ router.post("/:id", async (req, res, next) => {
     if (bell !== undefined) config.bell = bell;
     if (water !== undefined) config.water = water;
     if (bird !== undefined) config.bird = bird;
-    if (rain !== undefined) config.rain = rain;
+    if (thunder !== undefined) config.thunder = thunder;
     if (wind !== undefined) config.wind = wind;
-    if (people !== undefined) config.people = people;
+    if (waves !== undefined) config.waves = waves;
 
     await config.save().catch((err) => {
       error = err;
