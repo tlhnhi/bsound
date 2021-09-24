@@ -34,13 +34,16 @@ router.get("/search/", async (req, res) => {
 
 router.get("/share/:shareStr", async (req, res) => {
   let shareStr = req.params.shareStr;
+
+  console.log("shareStr", shareStr);
   let sound, time, loop, bell, water, bird, thunder, wind, waves;
+  let config;
   try {
     shareStr = Buffer.from(shareStr, "base64").toString("ascii");
 
     [sound, time, loop, bell, water, bird, thunder, wind, waves] =
       shareStr.split("-");
-    const config = {
+    config = {
       sound,
       time,
       loop,
