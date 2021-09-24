@@ -54,14 +54,14 @@ router.post("/:id", async (req, res, next) => {
   if (!soundObj)
     return handleError(res, false, "Can not find sound by provided id.");
 
-  const time = req.body.time || undefined;
+  const time = req.body.time !== undefined ? req.body.time : undefined;
   const loop = req.body.loop !== undefined ? req.body.loop : undefined;
-  const bell = req.body.bell || undefined;
-  const water = req.body.water || undefined;
-  const bird = req.body.bird || undefined;
-  const thunder = req.body.thunder || undefined;
-  const wind = req.body.wind || undefined;
-  const waves = req.body.waves || undefined;
+  const bell = req.body.bell !== undefined ? req.body.bell : undefined;
+  const water = req.body.water !== undefined ? req.body.water : undefined;
+  const bird = req.body.bird !== undefined ? req.body.bird : undefined;
+  const thunder = req.body.thunder !== undefined ? req.body.thunder : undefined;
+  const wind = req.body.wind !== undefined ? req.body.wind : undefined;
+  const waves = req.body.waves !== undefined ? req.body.waves : undefined;
 
   let config = await ConfigModel.findOne({
     user: user,
