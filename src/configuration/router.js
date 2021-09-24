@@ -55,7 +55,7 @@ router.post("/:id", async (req, res, next) => {
     return handleError(res, false, "Can not find sound by provided id.");
 
   const time = req.body.time || undefined;
-  const loop = req.body.loop || undefined;
+  const loop = req.body.loop !== undefined ? req.body.loop : undefined;
   const bell = req.body.bell || undefined;
   const water = req.body.water || undefined;
   const bird = req.body.bird || undefined;
